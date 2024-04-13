@@ -3454,27 +3454,15 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
 
         function getQrIcon() {
             let dark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-            const btnQr = document.getElementById('qrIconBtn')
             const btnCfgs = document.getElementById('myConfigsContainer')
-            btnQr.innerHTML = ""
             btnCfgs.innerHTML = ""
 
 
             if (dark) {
-                btnQr.innerHTML = `<lord-icon src="https://cdn.lordicon.com/fqrjldna.json" trigger="loop" delay="2000"
-                           
-                           colors="primary:#fff,secondary:#fff"
-                                class="w-10 h-10">
-                           </lord-icon>`
                 btnCfgs.innerHTML = `<lord-icon class="w-8 h-8" src="https://cdn.lordicon.com/gqzfzudq.json"
                                                 trigger="loop" delay="2000" colors="primary:#fff,secondary:#fff">
                                             </lord-icon>`
             } else {
-                btnQr.innerHTML = `<lord-icon src="https://cdn.lordicon.com/fqrjldna.json" trigger="loop" delay="2000"
-                           
-                           colors="primary:#000,secondary:#000"
-                                class="w-10 h-10">
-                           </lord-icon>`
                 btnCfgs.innerHTML = `<lord-icon class="w-8 h-8" src="https://cdn.lordicon.com/gqzfzudq.json"
                                                 trigger="loop" delay="2000" colors="primary:#000,secondary:#000">
                                             </lord-icon>`
@@ -3583,7 +3571,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
         const dataUsage = dataLimit == "∞" ? 100 : tmpUsage;
         const dataChartColor = dataUsage < 40 ? "bg-green-500" : dataUsage < 80 ? "bg-yellow-600" : "bg-red-500";
         const resetInterval = "{{ user.data_limit_reset_strategy.value }}";
-        let expireDateVar = expireDateInit.includes("∞") ? "∞" : localStorage.getItem("lang") == "fa" ? new Date(expireDateInit).toLocaleString("fa-IR-u-nu-latn").replace(",", " ") : expireDateInit;
+        let expireDateVar = expireDateInit.includes("∞") ? "∞" : new Date(expireDateInit).toLocaleString("fa-IR-u-nu-latn").split(",")[0];
         let appsJson = {
             IOS: {
                 Streisand: {
@@ -3818,35 +3806,6 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                                                 </div>`
             }
 
-
-
-            const countriesSelect = document.getElementById("countries");
-            function setLanguage() {
-                var selectedLanguage = countriesSelect.value;
-                localStorage.setItem("lang", selectedLanguage);
-                checkLang()
-            }
-
-            // Function to load the selected language from local storage
-            function loadLanguage() {
-                var selectedLanguage = localStorage.getItem("lang");
-                if (selectedLanguage) {
-                    countriesSelect.value = selectedLanguage;
-                }
-            }
-
-
-            // Attach event listener to the select box to update local storage when changed
-            countriesSelect.addEventListener("change", setLanguage);
-
-            // Load the selected language on page load
-            window.addEventListener("load", loadLanguage);
-
-            // Trigger the "change" event on page load to apply the saved language
-            var event = new Event("change");
-            countriesSelect.dispatchEvent(event);
-
-
             const copyButton = document.getElementById("copyBtn");
             copyButton.addEventListener("click", function () {
                 console.log('clicked');
@@ -3902,12 +3861,12 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
             class="relative px-6 pt-10 pb-8 shadow-main-sh rounded-none dark:shadow-main-sh-dark sm:mx-auto sm:rounded-3xl sm:px-10 bg-clip-padding backdrop-filter backdrop-blur-3xl bg-opacity-0 w-full max-w-2xl">
             <div class="mx-auto max-w-xl">
                 <div
-                    class="flex mb-8 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-3xl p-8 dark:text-white text-black flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50" style="font-family: Shabnam FD">
+                    class="flex mb-8 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-300 dark:from-gray-700 dark:via-gray-800 dark:to-gray-900 rounded-3xl p-8 dark:text-white text-black flex-col sm:flex-row space-y-10 sm:space-y-0 sm:divide-x sm:rtl:divide-x-reverse sm:divide-blue-600/50">
                     <div class="basis-1/3 space-y-5 flex flex-col items-center py-3 sm:ltr:pr-9 sm:rtl:pl-9" x-data>
                         <div x-text="calculatePercentage(dataUsed, dataLimit) + '٪'"
                             :class="getChartColor(calculatePercentage(dataUsed, dataLimit))"
                             class="radial-progress font-black text-2xl" id="progress__bar" style="--size:9rem;
-                            --thickness: 1.2rem;"></div>
+                            --thickness: 1.2rem; font-family: Shabnam FD;"></div>
                         <span class="inline-block dark:text-white text-black font-semibold text-lg">{{ user.username
                             }}</span>
                         <span
@@ -3917,7 +3876,7 @@ Constrain images and videos to the parent width and preserve their intrinsic asp
                             :class="[status == 'active' ? 'bg-green-500' : status == 'limited' ? 'bg-red-600' : status == 'expired' ? 'bg-orange-600' : 'bg-gray-600']"></span>
                     </div>
                     <div x-data="{ usedTraffic: {{ user.used_traffic }}, dataLimit: {% if not user.data_limit %}∞{% else %}{{ user.data_limit }}{% endif %} }"
-                        class="basis-2/3 flex flex-row items-center sm:ltr:pl-9 sm:rtl:pr-9">
+                        class="basis-2/3 flex flex-row items-center sm:ltr:pl-9 sm:rtl:pr-9" style="font-family: Shabnam FD">
                         <div class="data-usage w-full">
                             <div class="dark:text-white text-black text-center mb-2"><span class="font-bold"
                                     x-text="$t('dataUsage')"></span><span dir="ltr">{{ user.used_traffic | bytesformat
